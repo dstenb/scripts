@@ -1,0 +1,16 @@
+#! /bin/sh
+
+# Small script for controlling Spotify Linux
+# Tested with Spotify 0.6.6
+
+NAME="Spotify Premium"
+
+if [ "$1" == "next" ] ; then
+	xdotool search --name "$NAME" key ctrl+Right
+elif [ "$1" == "prev" ] ; then
+	xdotool search --name "$NAME" key ctrl+Left
+elif [ "$1" == "toggle" ] ; then
+	xdotool search --name "$NAME" key space
+else
+	echo "Usage: $0 [prev|next|toggle]"
+fi
