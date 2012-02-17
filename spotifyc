@@ -4,13 +4,18 @@
 # Tested with Spotify 0.6.6
 
 NAME="Spotify Premium"
+D="org.mpris.MediaPlayer2.spotify"
+P="/org/mpris/MediaPlayer2"
 
 if [ "$1" = "next" ] ; then
-	xdotool search --name "$NAME" key ctrl+Right
+	MSG="org.mpris.MediaPlayer2.Player.Next"
+	dbus-send --print-reply --dest="$D" "$P" "$MSG" &> /dev/null
 elif [ "$1" = "prev" ] ; then
-	xdotool search --name "$NAME" key ctrl+Left
+	MSG="org.mpris.MediaPlayer2.Player.Previous"
+	dbus-send --print-reply --dest="$D" "$P" "$MSG" &> /dev/null
 elif [ "$1" = "toggle" ] ; then
-	xdotool search --name "$NAME" key space
+	MSG="org.mpris.MediaPlayer2.Player.PlayPause"
+	dbus-send --print-reply --dest="$D" "$P" "$MSG" &> /dev/null
 else
 	echo "Usage: $0 [prev|next|toggle]"
 fi
