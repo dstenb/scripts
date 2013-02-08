@@ -1,0 +1,28 @@
+#! /bin/sh
+#
+# Simple Git pre-commit indent hook
+#
+# The indent tool TOOL for files with then extension EXT can be set with
+#
+# (repo specific): git config hooks.indenter.EXT TOOL
+# or
+# (global): git config --global hooks.indenter.EXT TOOL
+
+files=`git diff --cached --name-only`
+
+for f in $files ; do
+	ext=`echo $f | grep -oP "\."[^.]*?$`
+
+	if [ "$ext" != "" ] ; then
+		indent=`git config hooks.indenter$ext`
+
+		if [ "$indent" != "" ] ; then
+			echo "$indent $f"
+			$indent "$f"
+			if [ -x "$f~" ] ; then
+				rm "$f~" # FIXME
+			fi
+			git add "$f"
+		fi
+	fi
+done
